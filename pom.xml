@@ -150,5 +150,10 @@
             </plugin>
         </plugins>
     </build>
-
+    <developers>
+        <developer>
+            <name>Leticia Ribeiro</name>
+            <email>letribeiro_1@hotmail.com</email>
+        </developer>
+    </developers>
 </project>
