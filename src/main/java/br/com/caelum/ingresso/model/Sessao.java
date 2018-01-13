@@ -1,13 +1,12 @@
 package br.com.caelum.ingresso.model;
 
+import java.math.BigDecimal;
 import java.time.LocalTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
-import org.hibernate.Hibernate;
 
 @Entity
 public class Sessao {
@@ -23,6 +22,16 @@ public class Sessao {
 	@ManyToOne
 	private Filme filme;
 	
+	public BigDecimal getPreco() {
+		return preco;
+	}
+
+	public void setPreco(BigDecimal preco) {
+		this.preco = preco;
+	}
+
+	private BigDecimal preco;	
+	
 	/**
 	 * @deprecated hibernate only
 	 */
@@ -34,6 +43,7 @@ public class Sessao {
 		this.horario = horario;
 		this.filme = filme;
 		this.sala = sala;
+		this.preco = sala.getPreco().add(filme.getPreco());
 	}
 
 	public Integer getId() {
