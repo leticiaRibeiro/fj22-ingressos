@@ -15,14 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mysql.fabric.xmlrpc.Client;
-
 import br.com.caelum.ingresso.dao.FilmeDao;
 import br.com.caelum.ingresso.dao.SalaDao;
 import br.com.caelum.ingresso.dao.SessaoDao;
 import br.com.caelum.ingresso.model.ImagemCapa;
 import br.com.caelum.ingresso.model.Sala;
 import br.com.caelum.ingresso.model.Sessao;
+import br.com.caelum.ingresso.model.TipoDeIngresso;
 import br.com.caelum.ingresso.model.form.SessaoForm;
 import br.com.caelum.ingresso.rest.ImdbClient;
 import br.com.caelum.ingresso.validacao.GerenciadorDeSessao;
@@ -81,10 +80,12 @@ public class SessaoController {
 		ModelAndView modelAndView = new ModelAndView("sessao/lugares");
 		
 		Sessao sessao = sessaoDao.findOne(sessaoId);
+		
 		Optional<ImagemCapa> imagemCapa = client.request(sessao.getFilme(), ImagemCapa.class);
 		
 		modelAndView.addObject("sessao", sessao);
 		modelAndView.addObject("imagemCapa", imagemCapa.orElse(new ImagemCapa()));
+		modelAndView.addObject("tiposDeIngressos", TipoDeIngresso.values());
 		
 		return modelAndView;
 	}

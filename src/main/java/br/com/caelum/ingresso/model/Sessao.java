@@ -2,13 +2,17 @@ package br.com.caelum.ingresso.model;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Sessao {
@@ -24,16 +28,20 @@ public class Sessao {
 	@ManyToOne
 	private Filme filme;
 	
+	private BigDecimal preco;	
+
+	@OneToMany(mappedBy = "sessao", fetch = FetchType.EAGER)
+	private Set<Ingresso> ingressos = new HashSet<>();
+	
+	
 	public BigDecimal getPreco() {
 		return preco;
 	}
-
+	
 	public void setPreco(BigDecimal preco) {
 		this.preco = preco;
 	}
 
-	private BigDecimal preco;	
-	
 	/**
 	 * @deprecated hibernate only
 	 */
@@ -82,6 +90,10 @@ public class Sessao {
 	
 	public Map<String, List<Lugar>> getMapaDeLugares() {
 		return sala.getMapaDeLugares();
+	}
+	
+	public boolean isDisponivel(Lugar lugarSelecionado) {
+		return ingressos.stream().map(Ingresso::getLugar).noneMatch(lugar -> lugar.equals(lugarSelecionado));
 	}
 
 }
