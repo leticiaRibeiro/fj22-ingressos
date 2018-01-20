@@ -17,6 +17,14 @@ import javax.persistence.OneToMany;
 @Entity
 public class Sessao {
 	
+	public Set<Ingresso> getIngressos() {
+		return ingressos;
+	}
+
+	public void setIngressos(Set<Ingresso> ingressos) {
+		this.ingressos = ingressos;
+	}
+
 	@Id
 	@GeneratedValue
 	private Integer id;
